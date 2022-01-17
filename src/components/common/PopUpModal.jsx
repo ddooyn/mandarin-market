@@ -3,12 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 export default function PopUpModal({ visible, onClose }) {
-  const onDimedClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose(e);
-    }
-  };
-
   const close = (e) => {
     if (onClose) {
       onClose(e);
@@ -24,7 +18,7 @@ export default function PopUpModal({ visible, onClose }) {
         </Button>
         <Button type="button">로그아웃</Button>
       </PopUpModalContainer>
-      <Dimed visible={visible} onClick={onDimedClick} />
+      <Dimed visible={visible} />
     </>
   );
 }

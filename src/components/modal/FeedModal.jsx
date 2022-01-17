@@ -11,18 +11,26 @@ export default function FeedModal({ list, showing, showModal }) {
   const closePopUp = () => {
     setVisiblePop(false);
   };
+  const onDimedClick = (e) => {
+    if (e.target === e.currentTarget) {
+      showModal();
+    }
+  };
   return (
-    <ModalContainer className={showing}>
-      <CloseBar onClick={showModal} />
-      <ul>
-        {list.map((item) => (
-          <MenuItem key={item} onClick={item === '삭제' ? openPopUp : null}>
-            {item}
-          </MenuItem>
-        ))}
-      </ul>
-      {visiblePop && <FeedPopUp visible={visiblePop} onClose={closePopUp} />}
-    </ModalContainer>
+    <>
+      <ModalContainer className={showing}>
+        <CloseBar onClick={showModal} />
+        <ul>
+          {list.map((item) => (
+            <MenuItem key={item} onClick={item === '삭제' ? openPopUp : null}>
+              {item}
+            </MenuItem>
+          ))}
+        </ul>
+        {visiblePop && <FeedPopUp visible={visiblePop} onClose={closePopUp} />}
+      </ModalContainer>
+      <Dimed className={showing} onClick={onDimedClick} />
+    </>
   );
 }
 
@@ -72,4 +80,20 @@ const MenuItem = styled.li`
   padding: 0 26px;
   font-size: 14px;
   cursor: pointer;
+`;
+
+const Dimed = styled.div`
+  display: none;
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 499;
+  outline: 0;
+  &.active {
+    display: block;
+  }
 `;
