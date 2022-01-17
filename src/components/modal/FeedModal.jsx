@@ -34,7 +34,13 @@ export default function FeedModal({ list, showing, showModal, postid }) {
             </MenuItem>
           ))}
         </ul>
-        {visiblePop && <FeedPopUp visible={visiblePop} onClose={closePopUp} />}
+        {visiblePop && (
+          <FeedPopUp
+            visible={visiblePop}
+            onClose={closePopUp}
+            postid={postid}
+          />
+        )}
       </ModalContainer>
       <Dimed className={showing} onClick={onDimedClick} />
     </>

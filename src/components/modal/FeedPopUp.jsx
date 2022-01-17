@@ -1,12 +1,24 @@
 import React from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { SERVER_BASE_URL } from '../../constants';
 
-export default function FeedPopUp({ visible, onClose }) {
+export default function FeedPopUp({ visible, onClose, postid }) {
   const close = (e) => {
     if (onClose) {
       onClose(e);
     }
+  };
+  const deleteFeed = async () => {
+    const token = localStorage.getItem('token');
+    await axios.delete(`${SERVER_BASE_URL}/post/${postid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
+      },
+    });
+    window.location.replace('/profile');
   };
 
   return (
@@ -16,7 +28,9 @@ export default function FeedPopUp({ visible, onClose }) {
         <Button type="button" onClick={close}>
           취소
         </Button>
-        <Button type="button">삭제</Button>
+        <Button type="button" onClick={deleteFeed}>
+          삭제
+        </Button>
       </PopUpModalContainer>
       <Dimed visible={visible} />
     </>
@@ -26,6 +40,7 @@ export default function FeedPopUp({ visible, onClose }) {
 FeedPopUp.propTypes = {
   visible: PropTypes.bool,
   onClose: PropTypes.func,
+  postid: PropTypes.string.isRequired,
 };
 FeedPopUp.defaultProps = {
   visible: false,
