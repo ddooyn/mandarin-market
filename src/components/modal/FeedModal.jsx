@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import FeedPopUp from './FeedPopUp';
 
-export default function FeedModal({ list, showing, showModal }) {
+export default function FeedModal({ list, showing, showModal, postid }) {
+  const navigate = useNavigate();
   const [visiblePop, setVisiblePop] = useState(false);
   const openPopUp = () => {
     setVisiblePop(true);
@@ -16,13 +18,18 @@ export default function FeedModal({ list, showing, showModal }) {
       showModal();
     }
   };
+  const showUpdate = () => {
+    navigate(`/upload/${postid}`);
+  };
+  const menuAction = [openPopUp, showUpdate];
+
   return (
     <>
       <ModalContainer className={showing}>
         <CloseBar onClick={showModal} />
         <ul>
-          {list.map((item) => (
-            <MenuItem key={item} onClick={item === '삭제' ? openPopUp : null}>
+          {list.map((item, index) => (
+            <MenuItem key={item} onClick={menuAction[index]}>
               {item}
             </MenuItem>
           ))}
@@ -38,6 +45,7 @@ FeedModal.propTypes = {
   list: PropTypes.arrayOf(PropTypes.string).isRequired,
   showing: PropTypes.string,
   showModal: PropTypes.func.isRequired,
+  postid: PropTypes.string.isRequired,
 };
 FeedModal.defaultProps = {
   showing: null,

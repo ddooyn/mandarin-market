@@ -118,6 +118,7 @@ function FeedCard({
             showing={showing ? 'active' : null}
             showModal={showModal}
             list={['삭제', '수정']}
+            postid={postid}
           />
         </FeedMenu>
       </FeedContents>
