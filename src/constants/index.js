@@ -9,4 +9,5 @@ export const routes = {
   loginEmail: '/login/email',
   join: '/join',
   upload: '/upload',
+  uploadEdit: '/upload/:postid',
 };
